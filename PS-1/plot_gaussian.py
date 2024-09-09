@@ -20,11 +20,9 @@ def calculate_Gaussian(x):
 # create x values to be plotted
 STEP_SIZE = 0.01 # step size of function
 xarray = np.arange(-10, 10+STEP_SIZE, STEP_SIZE, dtype=np.float32)
-print(xarray[-1])
+#print(xarray[-1])
 plt.plot(xarray, calculate_Gaussian(xarray))
 plt.title("Gaussian")
 #plt.xlabel("bro") 
 #plt.text(-7.5,.1,r'bro')
 plt.savefig('gaussian.png')
-
-#What does normalizing mean???
