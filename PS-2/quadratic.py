@@ -9,7 +9,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 """
-Problem ??? Exercise 4.2 pg 133
+Problem 5 Exercise 4.2 pg 133
 """
 
 def Quadratic_v1(a,b,c):
@@ -46,8 +46,14 @@ def quadratic(a,b,c):
     return soln1,soln2
 
 def handtest(a,b,c):
-    #print("v1: ", Quadratic_v1(a,b,c))
-    #print("v2: ", Quadratic_v2(a,b,c))
+    print("v1: ", Quadratic_v1(a,b,c))
+    print("v2: ", Quadratic_v2(a,b,c))
     soln1, soln2 = quadratic(a,b,c)
     print(soln1)
     print(soln2)
+    
+a = 0.001
+b = 1000
+c = 0.001
+
+#handtest(a,b,c)
