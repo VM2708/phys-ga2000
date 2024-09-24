@@ -99,9 +99,9 @@ printGaussian(1000)
 
 
 # Run the plot function
-#Narr = (np.arange(1,1000, 5))
-#plotY(Narr)
-#print(valuesOfY(createYarr(1)))
+Narr = (np.arange(1,1000, 5))
+plotY(Narr)
+print(valuesOfY(createYarr(1)))
 
 
 
