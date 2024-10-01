@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Tue Sep 24 10:25:01 2024
+Created on Wed Sep 25 11:38:24 2024
 
 @author: vedhasyamuvva
 """
 
-#Heat Capacity of a solid (pg 172)
+#Heat Capacity of a solid (pg 172) part C
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -14,17 +14,15 @@ import matplotlib.pyplot as plt
 def f(x):
     return (x**4*np.exp(x)/(np.exp(x)-1)**2)
 
-def cv(T):
+def cv(T,N):
     
-    V = 1000*10**(-2*3) #m^3
-    rho = 6.022*10**(28) #m^-3
-    td = 428 # K
-    kb = 1.380649 * 10**(-23) #J/K
+    V = 1000*10**(-2*3)
+    rho = 6.022*10**(28)
+    td = 428
+    kb = 1.380649 * 10**(-23)
     
     a = 0
     b = td/T
-    
-    N = 50
     
     #x contains sample points and w contains the weights
     x,w = np.polynomial.legendre.leggauss(N)
@@ -39,19 +37,21 @@ def cv(T):
         
     return(9*V*rho*kb*(T/td)**3*s)
 
-def createArray(Tarr):
-    arr = np.empty(np.size(Tarr))
+def createArray(T,Narr):
+    arr = np.empty(np.size(Narr))
         
-    for i in range (np.size(Tarr)):
-        arr[i] = cv(Tarr[i])
+    for i in range (np.size(Narr)):
+        arr[i] = cv(T,Narr[i])
     return arr
 
-Tarr = np.arange(5,500,1)
-
-plt.plot(Tarr,createArray(Tarr))
-plt.xlabel("Temperature (K)")
-plt.ylabel("Heat Capacity (J/K) ")
+T = 5
+Narr = np.arange(10,80,10)
+   
+plt.plot(Narr,createArray(T,Narr))
+plt.xlabel("N")
+plt.ylabel("Heat Capacity (J/K)")
 plt.title("Heat Capcity of Aluminum As A Function of Temperature")
+plt.legend()
 
-plt.savefig("HeatCapacity.png")
+plt.savefig("HeatCapacityWithConvergence.png")
 
