@@ -19,7 +19,7 @@ flux = hdu_list['FLUX'].data
 
 logwave = 10**(logwave-1)
 
-flux = flux[0:500]
+flux = flux[0:10]
 
 #Flux has 9713 galaxies with each galaxy having an intensity per wavelength measurement
 print(np.shape(logwave))
@@ -58,15 +58,13 @@ plt.show()
 
 #Part d Find eigenVals/Vecs of covariance matrix
 R = flux.T
-cov = 1/(np.shape(flux)[0]) * R @ R.T
+cov = np.dot(R,R.T)
+print("cov shape: ", np.shape(cov))
 eigvals, eigvecs = np.linalg.eig(cov)
 
-idx = eigvals.argsort()[::-1]  # Get indices to sort in descending order
-eigvals = eigvals[idx]
-eigvecs = eigvecs[:, idx]
 
 for i in range (5):
-    plt.plot(logwave,eigvecs[:,i], '.')
+    plt.plot(logwave,eigvecs[:,i], '-')
 plt.xlabel('Wavelength (nm)')
 plt.ylabel('Eigenvectors of the Residuals')
 plt.title('Eigenvectors')
@@ -79,6 +77,14 @@ U,S, Vh = np.linalg.svd(R.T, full_matrices=False)
 eigvecs = Vh.T
 print("eigvecs: ", np.shape(eigvecs), np.shape(eigvecs[i]))
 
+for i in range (5):
+    plt.plot(logwave,eigvecs[:,i], '-')
+plt.xlabel('Wavelength (nm)')
+plt.ylabel('Eigenvectors of the Residuals')
+plt.title('SVD Eigenvectors')
+plt.savefig("SVDEigenvectors.png")
+plt.show()
+
 #print("vt: ", eigvecs)
 
 covTime = timeit.timeit("np.linalg.eig(cov)", globals = globals(), number=5)
@@ -87,8 +93,8 @@ print("Time taken when using COV matrix: ", covTime)
 print("Time taken when using SVD: ", SVDTime)
 
 #Part f Determine why you would do either 
-print("condition number of C: ", np.max(cov)/np.min(cov))
-print("condition number of R: ", np.max(R)/np.min(R))
+print("condition number of C: ", np.max(eigvals)/np.min(eigvals))
+print("condition number of R: ", np.max(S)/np.min(S))
 
 #Part g Do PCA with first 5 components
 
@@ -110,7 +116,7 @@ for i in range(5):
 
     plt.plot(logwave, reconstructed_flux[i], label=f'Reconstructed Galaxy {i+1}', linestyle='--')
     
-    plt.xlabel('Wavelength (Angstroms)')
+    plt.xlabel('Wavelength (nm)')
     plt.ylabel(r'Flux ($10^{-17}$ erg s$^{-1}$ cm$^{-2}$ $\AA^{-1}$)')
     plt.title(f'Original vs Reconstructed Spectrum for Galaxy {i+1}')
     plt.legend()
